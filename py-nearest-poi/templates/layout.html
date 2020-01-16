@@ -1,0 +1,23 @@
+<!doctype html>
+
+<head>
+    <title>{% block title %}{% endblock %} - Nearest POIs</title>
+    {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+    <section class="content">
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+    </section>
+
+    {% block scripts %}{% endblock %}
+</body>

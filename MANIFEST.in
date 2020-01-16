@@ -1,0 +1,3 @@
+graft py-nearest-poi/static
+graft py-nearest-poi/templates
+global-exclude *.pyc

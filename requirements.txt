@@ -1,0 +1,5 @@
+geopy
+requests
+flask
+setuptools
+pytest

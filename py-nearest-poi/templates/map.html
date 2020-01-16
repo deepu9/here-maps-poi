@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block title %}Restaurant Map{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+{% endblock %}
+
+{% block header %}<h1>Restaurant Map Results</h1>{% endblock %}
+
+{% block content %}
+    {% if near_by_places %}
+        <section class="map">
+            <div class="map-wrapper">
+                <div class="col-4">
+                    {% for place in near_by_places %}
+                        <div class="place-list">
+                            <h3>{{ place.title }}</h3>
+                            <div class="place-info">
+                                <p><strong>Status:</strong> {{ place.opening_status }}</p>
+                                <p><strong>Opening Hours:</strong> {{ place.opening_hours }}</p>
+                                <p><strong>Distance:</strong> {{ place.distance }}</p>
+                            </div>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-8">
+                    <div id="map"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script>
+        const here = {
+           id: '{{ here_api_creds["APP_ID"] }}',
+           code: '{{ here_api_creds["APP_CODE"] }}'
+        }
+        const style = 'normal.day';
+
+        const hereTileUrl = `https://2.base.maps.api.here.com/maptile/2.1/maptile/newest/${style}/{z}/{x}/{y}/512/png8?app_id=${here.id}&app_code=${here.code}&ppi=320`;
+
+        const map = L.map('map', {
+           center: {{ base_position }},
+           zoom: 11,
+           layers: [L.tileLayer(hereTileUrl)]
+        });
+
+        {% for place in near_by_places %}
+            var customMarker = L.icon({iconUrl:'{{ place.icon }}'})
+
+            L.marker({{ place.position }}, {icon: customMarker})
+                .addTo(map)
+                .bindPopup(
+                    '<h3>{{ place.title }}</h3>'
+                    +'<div class="place-info">'
+                    +'<p><strong>Status: </strong>{{ place.opening_status }}</p>'
+                    +'<p><strong>Opening Hours: </strong>{{ place.opening_hours }}</p>'
+                    +'<p><strong>Distance: </strong>{{ place.distance }}</p>'
+                    +'</div>'
+                )
+                .openPopup();
+        {% endfor %}
+
+        map.attributionControl.addAttribution('&copy; HERE 2019');
+    </script>
+{% endblock %}
