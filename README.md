@@ -1,6 +1,6 @@
-#HERE Maps Point Of Interets(POI)
+# HERE Maps Point Of Interets(POI)
 
-###Install
+### Install
 * Add HERE map API keys in `config.json` in the root folder.
 * Run `pip install -e .` from the root folder. This will install all the requirements needed for the task to run.
 * Run `export FLASK_APP=here-maps-poi`, then
@@ -8,13 +8,13 @@
 * Run `flask run` to spin up the server.
 * You'll see a web URL generated from the above URL. Copy & paste it in the browser.
 
-###Technologies
+### Technologies
 1. HERE API - https://developer.here.com/develop/rest-apis
 2. Flask - https://flask.palletsprojects.com/en/1.1.x/
 3. Geopy - https://geopy.readthedocs.io/en/stable/
 4. Python v3.7
 
-###Code
+### Code
 Code is separated into two folders
 1. **hereAPI** - This is a module and heart of the app, which requests HERE maps API and get the data needed.
 It has two files:
@@ -30,7 +30,7 @@ It has two files:
         - takes the location object and feed it into PlacesAPI to get the restaurants near the address and
         - finally display them on the map with custom markers. Markers are feeded with the place information.
     
-###TODO
+### TODO
 1. Need to add:
     * Add other POI's in frontend as a dropdown
     * Add other POI's in backend
